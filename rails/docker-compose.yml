@@ -19,6 +19,8 @@ services:
       - WEBPACKER_DEV_SERVER_HOST=webpacker
     depends_on:
       - db
+    stdin_open: true
+    tty: true
   webpacker:
     build: .
     env_file:
