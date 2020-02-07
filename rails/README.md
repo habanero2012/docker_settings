@@ -43,6 +43,8 @@ default:
   host: <%= ENV.fetch("DATABASE_HOST") >
 ```
 
+データベース名もプロジェクトに沿った名前に変更しておく
+
 6. db を作成する
 
 ```bash
