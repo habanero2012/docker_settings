@@ -40,7 +40,7 @@ config/database.yml
 ```
 default:
   password: <%= ENV.fetch("MYSQL_ROOT_PASSWORD") %>
-  host: db
+  host: <%= ENV.fetch("DATABASE_HOST") >
 ```
 
 6. db を作成する
