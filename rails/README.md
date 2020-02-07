@@ -54,3 +54,13 @@ docker-compose run --rm web rake db:create
 ```bash
 docker-compose up
 ```
+
+## windows + vagrant + docker 環境の注意
+
+share folder にシンボリックリンクが作れないため、このままだとうまく動かない。
+下記のフォルダを vagrant の bind_mount や docker volume を利用して share folder の問題を避ける。
+または windows pro なら vagrant の"VBoxInternal2/SharedFoldersEnableSymlinksCreate"設定を利用して
+エラーを回避できる。
+
+- tmp/db
+- node_modules
