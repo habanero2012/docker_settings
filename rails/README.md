@@ -40,7 +40,7 @@ config/database.yml
 ```
 default:
   password: <%= ENV.fetch("MYSQL_ROOT_PASSWORD") %>
-  host: <%= ENV.fetch("DATABASE_HOST") >
+  host: <%= ENV.fetch("DATABASE_HOST") %>
 ```
 
 データベース名もプロジェクトに沿った名前に変更しておく
@@ -57,7 +57,7 @@ docker-compose run --rm app rake db:create
 docker-compose up
 ```
 
-## windows + vagrant + docker 環境の注意
+## windows + vagrant + docker 環境の注意点
 
 share folder にシンボリックリンクが作れないため、このままだとうまく動かない。
 下記のフォルダを vagrant の bind_mount や docker volume を利用して share folder の問題を避ける。
