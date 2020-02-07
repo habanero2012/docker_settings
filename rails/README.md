@@ -14,7 +14,7 @@
 rspec を入れるため,--skip-test オプションを有効にする
 
 ```bash
-docker-compose run app rails new . --force --skip-bundle --database=mysql --skip-test --skip-turbolinks --skip-sprockets
+docker-compose run app rails new . --force --skip-bundle --database=mysql --skip-test --skip-turbolinks --skip-sprockets --webpack
 ```
 
 3. docker-compose build を実行
