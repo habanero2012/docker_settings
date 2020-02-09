@@ -11,7 +11,7 @@ ADD Gemfile Gemfile
 ADD Gemfile.lock Gemfile.lock
 
 RUN apk update && \
-    apk add --no-cache yarn tzdata libxml2-dev curl-dev make gcc libc-dev g++ mariadb-dev imagemagick6-dev && \
+    apk add --no-cache bash git yarn tzdata libxml2-dev curl-dev make gcc libc-dev g++ mariadb-dev imagemagick6-dev && \
     bundle install && \
     rm -rf /usr/local/bundle/cache/* /usr/local/share/.cache/* /var/cache/* /tmp/* && \
     apk del libxml2-dev curl-dev make gcc libc-dev g++
