@@ -10,6 +10,9 @@ ENV APP_HOME /app_home
 RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
 
+ADD Gemfile Gemfile
+ADD Gemfile.lock Gemfile.lock
+
 # install dependencies
 RUN apk --update --no-cache add shadow sudo busybox-suid mariadb-connector-c-dev tzdata alpine-sdk
 
