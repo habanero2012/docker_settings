@@ -1,6 +1,6 @@
 FROM node:12.15.0-alpine as node
 
-FROM ruby:2.7.0-alpine as builder
+FROM ruby:2.7.0-alpine as dev
 
 ARG BUNDLER_VERSION="2.1.4"
 
@@ -29,3 +29,10 @@ RUN ln -s /usr/local/bin/node /usr/local/bin/nodejs && \
 RUN gem update --system && \
     gem install bundler --version ${BUNDLER_VERSION} && \
     bundle install
+
+
+FROM dev as builder
+
+COPY . APP_HOME
+RUN yarn install
+RUN RAILS_ENV=production bundle exec rails assets:precompile
