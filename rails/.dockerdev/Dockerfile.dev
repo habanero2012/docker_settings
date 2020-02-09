@@ -1,7 +1,10 @@
 FROM ruby:2.7.0-alpine
 
-ENV LANG C.UTF-8
+ARG NODE_MAJOR="12"
+ARG YARN_VERSION="1.22.0"
+ARG BUNDLER_VERSION="2.1.4"
 
+ENV LANG C.UTF-8
 ENV APP_HOME /app_home
 
 RUN mkdir $APP_HOME
@@ -11,7 +14,14 @@ ADD Gemfile Gemfile
 ADD Gemfile.lock Gemfile.lock
 
 RUN apk update && \
-    apk add --no-cache bash git yarn tzdata libxml2-dev curl-dev make gcc libc-dev g++ mariadb-dev imagemagick6-dev && \
+    apk add --no-cache bash git curl && \
+    curl -sL https://deb.nodesource.com/setup_$NODE_MAJOR.x | bash - && \
+    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+    echo 'deb http://dl.yarnpkg.com/debian/ stable main' > /etc/apt/sources.list.d/yarn.list && \
+    apk add --no-cache tzdata libxml2-dev curl-dev make gcc libc-dev g++ mariadb-dev imagemagick6-dev \
+    nodejs \
+    yarn=$YARN_VERSION && \
+    gem update --system && gem install bundler:$BUNDLER_VERSION && \
     bundle install && \
     rm -rf /usr/local/bundle/cache/* /usr/local/share/.cache/* /var/cache/* /tmp/* && \
     apk del libxml2-dev curl-dev make gcc libc-dev g++
