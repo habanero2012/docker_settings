@@ -1,7 +1,7 @@
-FROM ruby:2.7.0-alpine
+FROM node:12.15.0-alpine as node
 
-ARG NODE_MAJOR="12"
-ARG YARN_VERSION="1.22.0"
+FROM ruby:2.7.0-alpine as builder
+
 ARG BUNDLER_VERSION="2.1.4"
 
 ENV LANG C.UTF-8
@@ -10,19 +10,19 @@ ENV APP_HOME /app_home
 RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
 
-ADD Gemfile Gemfile
-ADD Gemfile.lock Gemfile.lock
+# install dependencies
+RUN apk --update --no-cache add shadow sudo busybox-suid mariadb-connector-c-dev tzdata alpine-sdk
 
-RUN apk update && \
-    apk add --no-cache bash git curl && \
-    curl -sL https://deb.nodesource.com/setup_$NODE_MAJOR.x | bash - && \
-    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
-    echo 'deb http://dl.yarnpkg.com/debian/ stable main' > /etc/apt/sources.list.d/yarn.list && \
-    apk add --no-cache tzdata libxml2-dev curl-dev make gcc libc-dev g++ mariadb-dev imagemagick6-dev \
-    nodejs \
-    yarn=$YARN_VERSION && \
-    gem update --system && gem install bundler:$BUNDLER_VERSION && \
-    bundle install && \
-    rm -rf /usr/local/bundle/cache/* /usr/local/share/.cache/* /var/cache/* /tmp/* && \
-    apk del libxml2-dev curl-dev make gcc libc-dev g++
+# copy nodejs and yarn
+COPY --from=node /usr/local/bin/node /usr/local/bin/node
+COPY --from=node /usr/local/include/node /usr/local/include/node
+COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
+COPY --from=node /opt/yarn /opt/yarn
+RUN ln -s /usr/local/bin/node /usr/local/bin/nodejs && \
+    ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm && \
+    ln -s /opt/yarn/bin/yarn /usr/local/bin/yarn
 
+# bundle installした後、makeで発生した不要なファイルは削除。
+RUN gem update --system && \
+    gem install bundler --version ${BUNDLER_VERSION} && \
+    bundle install

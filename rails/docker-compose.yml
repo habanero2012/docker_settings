@@ -4,6 +4,7 @@ services:
     build:
       context: .
       dockerfile: ./.dockerdev/Dockerfile.dev
+      target: builder
     image: rails-dev:1.0.0
 
   db:
