@@ -58,6 +58,40 @@ docker-compose run --rm app rake db:create
 docker-compose up
 ```
 
+## よく使うコマンド
+
+#### Rails Console 起動(sandbox mode)
+
+```bash
+docker-compose run --rm app rails c -s
+```
+
+#### ash 起動
+
+```bash
+docker-compose run --rm app ash
+```
+
+### 起動中のコンテナで ash 起動
+
+```bash
+docker-compose exec app ash
+```
+
+## 本番環境の設定
+
+#### 本番環境 image のビルド
+
+```bash
+docker-compose -f docker-compose-production.yml build
+```
+
+#### 本番環境で起動
+
+```bash
+docker-compose -f docker-compose-production.yml up
+```
+
 ## windows + vagrant + docker 環境の注意点
 
 share folder にシンボリックリンクが作れないため、このままだとうまく動かない。
