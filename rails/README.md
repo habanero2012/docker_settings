@@ -5,6 +5,7 @@
 1. プロジェクトディレクトリ直下に下記ファイルを設置する
 
 - docker-compose.yml
+- .dockerignore
 - .dockerdev
 - Gemfile
 - Gemfile.lock

@@ -1,12 +1,13 @@
 version: "3.7"
-services:
-  rails_template: &rails_template
-    build:
-      context: .
-      dockerfile: ./.dockerdev/Dockerfile.dev
-      target: production
-    image: rails-production:1.0.0
 
+x-rails_template: &rails_template
+  build:
+    context: .
+    dockerfile: ./.dockerdev/Dockerfile.dev
+    target: production
+  image: rails-production:1.0.0
+
+services:
   db:
     image: mysql:5.7
     volumes:
