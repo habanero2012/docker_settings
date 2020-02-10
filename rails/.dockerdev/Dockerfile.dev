@@ -33,6 +33,10 @@ RUN gem update --system && \
 
 FROM dev as builder
 
+ENV APP_HOME /app_home
+
+WORKDIR $APP_HOME
+
 COPY . APP_HOME
 RUN yarn install
 RUN RAILS_ENV=production bundle exec rails assets:precompile
