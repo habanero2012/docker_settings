@@ -37,6 +37,7 @@ rspec 等、必要な gem があれば Gemfile に追記してから実行する
 
 ```bash
 docker-compose build
+docker-compose run --rm app bundle  # Gemfile.lockを更新
 ```
 
 4. webpack をインストール
