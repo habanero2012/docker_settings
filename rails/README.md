@@ -4,8 +4,10 @@
 
 1. プロジェクトディレクトリ直下に下記ファイルを設置する
 
-- docker-compose.yml
 - .dockerdev
+- .dockerignore
+- docker-compose.yml
+- docker-compose-production.yml
 - Gemfile
 - Gemfile.lock
 
@@ -20,6 +22,18 @@ docker-compose run app rails new . --force --skip-bundle --database=mysql --skip
 3. docker-compose build を実行
 
 rspec 等、必要な gem があれば Gemfile に追記してから実行する
+
+#### おすすめ gem
+
+- better_errors
+- binding_of_caller
+- factory_bot_rails
+- html2slim
+- pry-rails
+- pry-byebug
+- rspec-rails
+- rubocop
+- slim-rails
 
 ```bash
 docker-compose build
@@ -39,7 +53,7 @@ config/database.yml
 
 ```
 default:
-  password: <%= ENV.fetch("MYSQL_ROOT_PASSWORD") %>
+  password: <%= ENV.fetch("DATABASE_PASSWORD") %>
   host: <%= ENV.fetch("DATABASE_HOST") %>
 ```
 
@@ -57,6 +71,40 @@ docker-compose run --rm app rake db:create
 docker-compose up
 ```
 
+## よく使うコマンド
+
+#### Rails Console 起動(sandbox mode)
+
+```bash
+docker-compose run --rm app rails c -s
+```
+
+#### ash 起動
+
+```bash
+docker-compose run --rm app ash
+```
+
+### 起動中のコンテナで ash 起動
+
+```bash
+docker-compose exec app ash
+```
+
+## 本番環境の設定
+
+#### 本番環境 image のビルド
+
+```bash
+docker-compose -f docker-compose-production.yml build
+```
+
+#### 本番環境で起動
+
+```bash
+docker-compose -f docker-compose-production.yml up
+```
+
 ## windows + vagrant + docker 環境の注意点
 
 share folder にシンボリックリンクが作れないため、このままだとうまく動かない。
@@ -66,3 +114,10 @@ share folder にシンボリックリンクが作れないため、このまま�
 
 - tmp/db
 - node_modules
+
+ファイルを更新してもアプリの動作が反映されないときは config/environments/development.rb の
+config.file_watcher を ActiveSupport::FileUpdateChecker に設定する
+
+```
+config.file_watcher = ActiveSupport::FileUpdateChecker
+```

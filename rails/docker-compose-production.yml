@@ -4,8 +4,8 @@ x-rails_template: &rails_template
   build:
     context: .
     dockerfile: ./.dockerdev/Dockerfile.dev
-    target: dev
-  image: rails-dev:1.0.0
+    target: production
+  image: rails-production:1.0.0
 
 services:
   db:
@@ -19,24 +19,11 @@ services:
 
   app:
     <<: *rails_template
-    command: ash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
-    volumes:
-      - .:/app_home
     ports:
       - "3000:3000"
     env_file:
-      - "./.dockerdev/env/app.env"
+      - "./.dockerdev/env/app.prod.env"
     depends_on:
       - db
     stdin_open: true
     tty: true
-
-  webpacker:
-    <<: *rails_template
-    command: ./bin/webpack-dev-server
-    volumes:
-      - .:/app_home
-    ports:
-      - "3035:3035"
-    env_file:
-      - "./.dockerdev/env/webpaker.env"
