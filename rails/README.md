@@ -23,6 +23,18 @@ docker-compose run app rails new . --force --skip-bundle --database=mysql --skip
 
 rspec 等、必要な gem があれば Gemfile に追記してから実行する
 
+#### おすすめ gem
+
+- better_errors
+- binding_of_caller
+- factory_bot_rails
+- html2slim
+- pry-rails
+- pry-byebug
+- rspec-rails
+- rubocop
+- slim-rails
+
 ```bash
 docker-compose build
 ```
@@ -41,7 +53,7 @@ config/database.yml
 
 ```
 default:
-  password: <%= ENV.fetch("MYSQL_ROOT_PASSWORD") %>
+  password: <%= ENV.fetch("DATABASE_PASSWORD") %>
   host: <%= ENV.fetch("DATABASE_HOST") %>
 ```
 
@@ -102,3 +114,10 @@ share folder にシンボリックリンクが作れないため、このまま�
 
 - tmp/db
 - node_modules
+
+ファイルを更新してもアプリの動作が反映されないときは config/environments/development.rb の
+config.file_watcher を ActiveSupport::FileUpdateChecker に設定する
+
+```
+config.file_watcher = ActiveSupport::FileUpdateChecker
+```
