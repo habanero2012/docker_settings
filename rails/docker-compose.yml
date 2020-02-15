@@ -10,6 +10,7 @@ x-rails_template: &rails_template
 services:
   db:
     image: mysql:5.7
+    restart: always
     volumes:
       - ./tmp/db:/var/lib/mysql
     env_file:

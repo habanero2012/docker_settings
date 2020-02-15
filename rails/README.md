@@ -74,6 +74,12 @@ docker-compose up
 
 ## よく使うコマンド
 
+#### rspec 実行
+
+```bash
+docker-compose run --rm -e RAILS_ENV=test app rspec
+```
+
 #### Rails Console 起動(sandbox mode)
 
 ```bash
