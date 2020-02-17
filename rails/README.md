@@ -98,6 +98,17 @@ docker-compose run --rm app ash
 docker-compose exec app ash
 ```
 
+### binding.pry を使う
+
+２つ目のコンソールを起動してコンテナに attach する
+
+```bash
+docker container ls -a # appのコンテナIDを調べる
+docker attach appのコンテナID
+```
+
+コンソールを抜けるには、コンテナのデタッチをする（ctrl-p ctrl-q）
+
 ## 本番環境の設定
 
 #### 本番環境 image のビルド
