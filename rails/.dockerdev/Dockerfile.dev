@@ -14,7 +14,7 @@ ADD Gemfile Gemfile
 ADD Gemfile.lock Gemfile.lock
 
 # install dependencies
-RUN apk --update --no-cache add shadow sudo busybox-suid mariadb-connector-c-dev tzdata alpine-sdk
+RUN apk --update --no-cache add shadow sudo busybox-suid mariadb-connector-c-dev tzdata alpine-sdk less
 
 # copy nodejs and yarn
 COPY --from=node /usr/local/bin/node /usr/local/bin/node
