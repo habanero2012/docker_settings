@@ -53,12 +53,12 @@ ENV APP_HOME /app_home
 RUN mkdir ${APP_HOME}
 WORKDIR ${APP_HOME}
 
+# public/packを上書きしないように先にローカルのファイルをコピーする
+COPY . .
+
 # gemやassets:precompileの終わったファイルはbuilderからコピーしてくる
 COPY --from=builder /usr/local/bundle /usr/local/bundle
 COPY --from=builder ${APP_HOME}/public/assets/ ${APP_HOME}/public/assets/
 COPY --from=builder ${APP_HOME}/public/packs/ ${APP_HOME}/public/packs/
-
-# ローカルのpublic/packsは削除しておくこと
-COPY . .
 
 CMD ["rails", "server", "-b", "0.0.0.0"]

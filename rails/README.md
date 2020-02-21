@@ -114,7 +114,6 @@ docker attach appのコンテナID
 #### 本番環境 image のビルド
 
 ```bash
-# build中にassets:precompileしたデータとローカルのソースコードがマージされるので,ローカルのpublic/packsは空にしておくこと
 docker-compose -f docker-compose-production.yml build
 ```
 
