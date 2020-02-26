@@ -15,7 +15,7 @@ services:
     build:
       context: .
       dockerfile: ./.dockerdev/Dockerfile.dev
-    command: ash -c "php artisan serve"
+    command: bash -c "php artisan serve --host=0.0.0.0"
     volumes:
       - .:/app_home
     ports:
